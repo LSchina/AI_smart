@@ -1,14 +1,14 @@
 import axios from "axios"
 import qs from "qs"
-import {useDataStore} from "../store/index.js";
+import useDataStore from "../store/index.js";
 
-const useData = useDataStore()
+
 /**
  * 创建Axios对象
  */
 const instance = axios.create({
-    baseURL: "http://localhost:81.1",
-    timeout: 5000,//配置5s超时
+    baseURL: "http://localhost:8101",
+    timeout: 50000,//配置50s超时
 })
 /**
  * 响应失败处理器
@@ -43,13 +43,15 @@ const errorHandle = (status, info) => {
  */
 instance.interceptors.request.use(
 
+
     config => {
         if (config.method === 'post') {
             // POST接收的网络请求参数需要进行格式转化
-            config.data = qs.stringify(config.data)
+            //config.data = qs.stringify(config.data)
 
         }
-        config.headers['token'] = useData.token
+        const dataStore = useDataStore()
+        config.headers['Authorization'] = dataStore.authorization
         return config
     },
     error => Promise.reject(error)

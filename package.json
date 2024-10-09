@@ -9,14 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "axios": "^1.7.2",
+    "echarts": "^5.5.1",
     "element-plus": "^2.7.5",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
-    "vant": "^4.7.3",
     "qs": "^6.12.1",
+    "vant": "^4.7.3",
     "vue": "^3.4.21",
-    "vue-router": "4.0"
+    "vue-router": "4.0",
+    "vue-echarts": "latest"
   },
   "devDependencies": {
     "@vant/auto-import-resolver": "^1.2.1",

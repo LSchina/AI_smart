@@ -3,7 +3,12 @@ import {defineStore} from "pinia"
 const useDataStore = defineStore("data", {
     state: () => {
         return {
-
+            authorization:"",
+            userId:"",
+            userName:"",
+            userAvatar:"",
+            userprofile:"",
+            userRole:"",
         }
     },
     //本地持久化(把数据存储到浏览器本地)
