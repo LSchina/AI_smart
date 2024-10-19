@@ -55,6 +55,14 @@ yuapi:
   client:
     access-key: i6a2soq6kdtlwepdlr0q1ifayvohgrms
     secret-key: 2iar9zdpo3uf9q0eiikkus51vyi7myux
+#讯飞星火
+## 讯飞 AI 配置
+xun-fei:
+  client:
+    appId: 6209cd5f
+    apiSecret: NGRiMjM3YmMyOWFlM2Y4NDQwYWFkYzRi
+    apiKey: c1767b8e1287ec356af2c030ca29912b
+
 
 server:
   max-http-header-size: 10240

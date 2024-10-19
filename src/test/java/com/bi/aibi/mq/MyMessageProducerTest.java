@@ -5,8 +5,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class MyMessageProducerTest {
 
@@ -17,5 +15,15 @@ class MyMessageProducerTest {
     void sendMessage() {
 
         myMessageProducer.sendMessage("code_exchange", "code_routingKey", "hello world");
+    }
+
+    @Test
+    void sendMessageTest() {
+
+        myMessageProducer.sendMessage(
+                "code_exchange_test",
+                "code_routing_key",
+                "hello world");
+
     }
 }

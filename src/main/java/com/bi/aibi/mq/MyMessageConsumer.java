@@ -3,6 +3,11 @@ package com.bi.aibi.mq;
 import com.rabbitmq.client.Channel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.ExchangeTypes;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.AmqpHeaders;
@@ -10,6 +15,8 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+
 
 // 使用@Component注解标记该类为一个组件，让Spring框架能够扫描并将其纳入管理
 @Component
@@ -25,9 +32,9 @@ public class MyMessageConsumer {
      * @param deliveryTag  消息的投递标签，用于唯一标识一条消息
      */
     // 使用@SneakyThrows注解简化异常处理
-    @SneakyThrows
+                    @SneakyThrows
     // 使用@RabbitListener注解指定要监听的队列名称为"code_queue"，并设置消息的确认机制为手动确认
-    @RabbitListener(queues = {"code_queue"}, ackMode = "MANUAL")
+    //@RabbitListener(queues = {"code_queue_one"}, ackMode = "MANUAL")
     // @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag是一个方法参数注解,用于从消息头中获取投递标签(deliveryTag),
     // 在RabbitMQ中,每条消息都会被分配一个唯一的投递标签，用于标识该消息在通道中的投递状态和顺序。通过使用@Header(AmqpHeaders.DELIVERY_TAG)注解,可以从消息头中提取出该投递标签,并将其赋值给long deliveryTag参数。
     public void receiveMessage(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) {
@@ -38,4 +45,40 @@ public class MyMessageConsumer {
         channel.basicAck(deliveryTag, false);
     }
 
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(value = "test_queue_code",durable = "true"),
+            exchange = @Exchange(name = "code_exchange_test", type = ExchangeTypes.TOPIC),
+            key = "code_routing_key"
+    ))
+    public void receiveMessage2(String message) {
+        log.info("receiveMessage2 message = {}", message);
+    }
+
+
+    @RabbitListener(bindings = @QueueBinding(
+            /*队列名称、持久化、自动删除、排他*/
+            value = @Queue(value = "test_queue_code", durable = "true", autoDelete = "false", exclusive = "false"),
+            exchange = @Exchange(name = "code_exchange_test", type = ExchangeTypes.TOPIC),
+            key = "code_routing_key"
+    ))
+    public void receiveMessage3(String message) {
+        log.info("receiveMessage2 message = {}", message);
+    }
+
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(value = "test_queue_code_delay",durable = "true"),
+            exchange = @Exchange(name = "exchange_test", type = ExchangeTypes.TOPIC),
+            key = "routing_key_test"
+    ))
+    public void receiveMessage4(String message) {
+        log.info("receiveMessage4 message = {}", message);
+    }
+
+
+    @RabbitListener(queues = {"normal_delay_queue"})
+    public void orderExpire(String message) {
+        log.info("订单超时未支付，取消订单:",message);
+        log.info("----------------------------------------------------");
+    }
 }
+

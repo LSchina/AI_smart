@@ -1,6 +1,10 @@
 package com.bi.aibi.mq;
 
+import com.bi.aibi.config.mq.BasicIdMessageProcessor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +17,10 @@ public class MyMessageProducer {
 	// 使用@Resource注解对rabbitTemplate进行依赖注入
     @Resource
     private RabbitTemplate rabbitTemplate;
+
+    @Resource
+    private BasicIdMessageProcessor basicIdMessageProcessor;
+
 	/**
      * 发送消息的方法
      *

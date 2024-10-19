@@ -18,7 +18,6 @@ public class ThreadPoolExecutorConfig {
     public ThreadPoolExecutor threadPoolExecutor(){
         //创建一个线程工厂
         ThreadFactory threadFactory = new ThreadFactory() {
-
             //初始化线程数为1
             private int count = 1;
 

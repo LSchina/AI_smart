@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bi.aibi.mapper.DialogueRoomMapper">
+
+    <resultMap id="BaseResultMap" type="com.bi.aibi.model.entity.DialogueRoom">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="createTime" column="createdTime" jdbcType="TIMESTAMP"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="requestNum" column="requestNum" jdbcType="INTEGER"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="effect" column="effect" jdbcType="INTEGER"/>
+            <result property="isDelete" column="isDelete" jdbcType="INTEGER"/>
+            <result property="roomAvatar" column="roomAvatar" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,createTime,userId,
+        requestNum,title,effect,
+        isDelete,roomAvatar
+    </sql>
+</mapper>
